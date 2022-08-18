@@ -54,8 +54,9 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir):
             if i >= 100000000:
                 break
             line_list = line.strip().split("\t")
-            nid,title,url,public_time,mthid,uploader,sv_author_brand_level,tags,general_tag,manual_tags,\
-                    video_type,realurl,video_duration,new_cate_v2,new_sub_cate_v2,bjh_is_v = line_list[:16]
+            #nid,title,url,public_time,mthid,uploader,sv_author_brand_level,tags,general_tag,manual_tags,\
+            #        video_type,realurl,video_duration,new_cate_v2,new_sub_cate_v2,bjh_is_v = line_list[:16]
+            nid, title, url, public_time, mthid, new_cate_v2, new_sub_cate_v2, manual_tags = line_list[:8]
             
             if new_cate_v2 in cate_remove_set:
                 continue
@@ -72,10 +73,11 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir):
                 author_dict[mthid]["nid"] = []
                 author_dict[mthid]["index"] = id_author_len
                 id_author_len += 1
-            manual_tags = manual_tags.replace("]","")
-            manual_tags = manual_tags.replace("[","")
-            manual_tags = manual_tags.replace("\"","")
-            manual_tags = manual_tags.split(",")
+            #manual_tags = manual_tags.replace("]","")
+            #manual_tags = manual_tags.replace("[","")
+            #manual_tags = manual_tags.replace("\"","")
+            #manual_tags = manual_tags.split(",")
+            manual_tags = json.loads(manual_tags).keys()
             for tag in manual_tags:
                 if tag not in author_dict[mthid]["tag"]:
                     author_dict[mthid]["tag"][tag] = 0
@@ -89,8 +91,9 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir):
             manual_tags_str = str("$".join(manual_tags))
             author_dict[mthid]["manual_tags"].append(manual_tags_str)
             author_dict[mthid]["nid"].append([nid,title,url,new_cate_v2,new_sub_cate_v2,manual_tags_str,manual_tags])
-
-    for mthid in author_dict.keys():
+    #for mthid in author_dict.keys():
+    author_set = set(author_dict.keys())
+    for mthid in author_set:
         author_nid_num = author_dict[mthid]["num"]
         cate_set = author_dict[mthid]["cate"]
         cate_sum = len(cate_set)
@@ -219,4 +222,4 @@ if __name__ == '__main__':
     #exit()
     #net_to_sample("zhengpai_data_mthid_duan", "zhongzi_author", tag_set,dir)
     #net_to_sample("zhengpai_data_mthid", "zhongzi_author", tag_set,dir)
-    net_to_sample("./data/zhengpai_20210422_20210711_pre", "./data/zhongzi_author", tag_set,dir)
+    net_to_sample("./data/zhengpai_tuwen", "./data/zhongzi_author", tag_set,dir)

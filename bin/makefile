@@ -1,9 +1,10 @@
-CC = /opt/compiler/gcc-4.8.2/bin/gcc
-CPP = /opt/compiler/gcc-4.8.2/bin/g++
+CC = /usr/bin/gcc
+CPP = /usr/bin/g++
 
-FLAGS = -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+#FLAGS = -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+FLAGS = -lm -pthread -O3 -march=native -funroll-loops -Wno-unused-result
 
-all: metapath2vec distance similar pair_similar position similar_top1000 similar_topall similar_top1 diff_distance
+all: metapath2vec distance similar pair_similar position similar_top10 similar_topall similar_top1 diff_distance
 
 metapath2vec : metapath2vec.cpp
 	$(CPP) metapath2vec.cpp -o metapath2vec $(FLAGS)
@@ -17,10 +18,10 @@ similar : get_similar_author.c
 similar_top1000: get_similar_author_zj.c
 	$(CC) get_similar_author_zj.c -o similar_top1000 $(FLAGS)
 
-similar_top1000: get_similar_author_10000.c
+similar_top10000: get_similar_author_10000.c
 	$(CC) get_similar_author_10000.c -o similar_top10000 $(FLAGS)
 
-similar_top1000: get_similar_author_all.c
+similar_topall: get_similar_author_all.c
 	$(CC) get_similar_author_all.c -o similar_topall $(FLAGS)
     
 similar_top1: get_similar_author_lzj.c
