@@ -124,26 +124,12 @@ class MetaPathGenerator:
 #python py4genMetaPaths.py 1000 100 net_aminer output.aminer.w1000.l100.txt
 #python py4genMetaPaths.py 1000 100 net_dbis   output.dbis.w1000.l100.txt
  
-dirpath = "net_aminer"
-# OR 
-dirpath = "net_dbis"
-#OR
-dirpath = "./data/net_train_10"
- 
-numwalks = int(sys.argv[1])
-walklength = int(sys.argv[2])
-dirpath = sys.argv[3]
-outfilename = "./data/in_train_" + str(numwalks) + "/train.cac.w" + str(numwalks) + ".l" + str(walklength) +  ".newconf.txt"
-
-#dirpath = sys.argv[3]
-#outfilename = sys.argv[4]
- 
-#numwalks = 1000
-#walklength = 100
- 
-#dirpath = "net_train"
 
 def main():
+    numwalks = int(sys.argv[1])
+    walklength = int(sys.argv[2])
+    dirpath = sys.argv[3]
+    outfilename = "./data/in_train_" + str(numwalks) + "/train.cac.w" + str(numwalks) + ".l" + str(walklength) +  ".newconf.txt"
     mpg = MetaPathGenerator()
     mpg.read_data(dirpath)
     mpg.generate_random_aca(outfilename, numwalks, walklength)

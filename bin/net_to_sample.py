@@ -30,7 +30,7 @@ def tag(tags_file):
             tag_set.add(tag)
     return tag_set
 
-def net_to_sample(net_file, zhongzi_file, tag_set, dir):
+def net_to_sample(net_file, zhongzi_file, tag_set, dir_name):
     author_dict = {}
     id_author = {}
     id_tag = {}
@@ -54,8 +54,6 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir):
             if i >= 100000000:
                 break
             line_list = line.strip().split("\t")
-            #nid,title,url,public_time,mthid,uploader,sv_author_brand_level,tags,general_tag,manual_tags,\
-            #        video_type,realurl,video_duration,new_cate_v2,new_sub_cate_v2,bjh_is_v = line_list[:16]
             nid, title, url, public_time, mthid, new_cate_v2, new_sub_cate_v2, manual_tags = line_list[:8]
             
             if new_cate_v2 in cate_remove_set:
@@ -142,46 +140,14 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir):
                 paper_tag[nid].append(str(tag_id[tag]))
         print(str(mthid) + "\t" + str(author_nid_num) + "\t" + str(cate_sum) + "\t" + str(tag_sum) + "\t" + cate_str + "\t" + tag_str)
 
-    """ 
-    with open(zhongzi_file) as f:
-        i = 0
-        for line in f:
-            mthid = "a" + str(i) + "_author"
-            line_list = line.strip().split("\t")
-            tag_list = line_list[0].strip().split(",")
-            id_author[id_author_len] = mthid #种子作者
-            author_dict[mthid] = {}
-            author_dict[mthid]["cate"] = set()
-            author_dict[mthid]["manual_tags"] = tag_list #种子作者tag_list只用一个
-            author_dict[mthid]["nid"] = [] 
-            k = 0 
-            while k < 100:
-                nid = str(i) + "_nid_" + str(k)
-                paper_author[nid] = id_author_len #种子文章
-                paper_tag[nid] = []
-                for tag in tag_list:
-                    #if tag in tag_set:
-                    #    continue 
-                    #if tag not in tag_id:
-                    #    id_tag[id_tag_len] = tag
-                    #    tag_id[tag] = id_tag_len
-                    #    tag_num[tag] = 0
-                    #    id_tag_len += 1
-                    #tag_num[tag] += 1
-                    if tag in tag_id:
-                        paper_tag[nid].append(tag_id.get(tag,""))
-                k += 1
-            id_author_len += 1
-            i += 1 
-    """
-    id_author_file = open(str(dir) + "/id_author.txt",'w')
-    id_tag_file = open(str(dir) + "/id_tag.txt",'w')
-    paper_author_file = open(str(dir) + "/paper_author.txt",'w')
-    paper_tag_file = open(str(dir) + "/paper_tag.txt",'w')
+    id_author_file = open(str(dir_name) + "/id_author.txt",'w')
+    id_tag_file = open(str(dir_name) + "/id_tag.txt",'w')
+    paper_author_file = open(str(dir_name) + "/paper_author.txt",'w')
+    paper_tag_file = open(str(dir_name) + "/paper_tag.txt",'w')
     
-    author_paper_file = open(str(dir) + "/author_paper.txt",'w')
-    author_tag_file = open(str(dir) + "/author_tag.txt",'w')
-    tag_num_file = open(str(dir) + "/tag_num.txt",'w')
+    author_paper_file = open(str(dir_name) + "/author_paper.txt",'w')
+    author_tag_file = open(str(dir_name) + "/author_tag.txt",'w')
+    tag_num_file = open(str(dir_name) + "/tag_num.txt",'w')
     
     for id,author in id_author.items():
         id_author_file.write(str(id) + "\t" + str(author) + "\n")
@@ -212,14 +178,10 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir):
     author_tag_file.close()
     tag_num_file.close()
             
-    print("================")
 if __name__ == '__main__':
 
     numwalks = sys.argv[1]
-    dir = "./data/net_train_" + str(numwalks)
+    dir_name = "./data/net_train_" + str(numwalks)
     #tag_set = tag("all_all")
     tag_set = set()
-    #exit()
-    #net_to_sample("zhengpai_data_mthid_duan", "zhongzi_author", tag_set,dir)
-    #net_to_sample("zhengpai_data_mthid", "zhongzi_author", tag_set,dir)
-    net_to_sample("./data/zhengpai_tuwen", "./data/zhongzi_author", tag_set,dir)
+    net_to_sample("./data/zhengpai_tuwen", "./data/zhongzi_author", tag_set, dir_name)

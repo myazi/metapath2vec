@@ -8,11 +8,9 @@ RESULT_DIR="./data/result"
 LOG_DIR="./log"
 email="yingwenjie@baidu.com"
 cur_min=`date -d "-1 minute" +%Y%m%d%H%M`
-last_min=`date -d "-300 minute" +%Y%m%d%H%M`
-echo "$cur_min"
 
-numwalks=10
-walklength=10
+numwalks=10 ##游走步数
+walklength=10 ##游走长度
 
 #检查旧进程是否结束，未结束，发送邮件报警
 IP_FILE='nid_district.pid'
@@ -21,12 +19,14 @@ if [ -f $IP_FILE ];then
     exit -1
 fi
 echo "PID of this script: $$" > $IP_FILE
+
 rm -rf ${DATA_DIR}/net_train_${numwalks}
 mkdir ${DATA_DIR}/net_train_${numwalks}
 rm -rf ${DATA_DIR}/in_train_${numwalks}
 mkdir ${DATA_DIR}/in_train_${numwalks}
 rm -rf ${DATA_DIR}/out_train_${numwalks}
 mkdir ${DATA_DIR}/out_train_${numwalks}
+
 #构建网络
 python ${BIN}/net_to_sample.py ${numwalks} > ${DATA_DIR}/author_tmp
 
@@ -41,11 +41,6 @@ grep author ${DATA_DIR}/net_train_${numwalks}/id_author.txt | awk -F "\t" '{prin
 #cut -f 2 ./net_train_${numwalks}/id_author.txt > all_author
 
 #获取种子作者的top10相似作者
-#./similar_top10 ./out_train/train.cac.w${numwalks}.l${walklength} zhongzi_author_pm_author zhongzi_author_pm_author_out
-#./similar_top1000 ./out_train/train.cac.w${numwalks}.l${walklength} all_author all_author_out
-#./similar_top10000 ./out_train/train.cac.w${numwalks}.l${walklength} yongshang_author yongshang_author_out
-#./similar_top1 ./out_train_all/train.cac.w${numwalks}.l${walklength} biaozhu_pm_remove_other_fz biaozhu_pm_remove_other_out
-#${BIN}/similar_topall ${DATA_DIR}/out_train_${numwalks}/train.cac.w${numwalks}.l${walklength} ${DATA_DIR}/yongshang_author ${DATA_DIR}/yongshang_author_out
 ${BIN}/similar_top10 ${DATA_DIR}/out_train_${numwalks}/train.cac.w${numwalks}.l${walklength} ${DATA_DIR}/yongshang_author ${DATA_DIR}/yongshang_author_out
 
 #输出种子作者以及top10作者的 tags标签
