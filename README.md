@@ -2,7 +2,6 @@
 
 Metapath2vec是一种node2vec向量表示方法. 首次提出了在异构网络上通过元路径游走(metapath)的方式生成游走序列(训练样本)，同word2vec类似以最大化同构边𝑁𝑡(𝑉)下node上下文共现概率为目标，使用skip-gram模型和负采样方式学习损失函数.
 
-![matepath2vec](./docs/img/matepath2vec.png)
 <p align="center">
  <img src="docs/img/matepath2vec.png" alt="matepath2vec" />
 </p>
@@ -10,7 +9,7 @@ Metapath2vec是一种node2vec向量表示方法. 首次提出了在异构网络�
 ## 数据
 源数据：./data/zhengpai_tuwen
 <p align="left">
- <img src="docs/img/data.png" alt="data" width="50%" />
+ <img src="docs/img/data.png" alt="data" width="75%" />
 </p>
 
 二部图数据：./data/net_train
