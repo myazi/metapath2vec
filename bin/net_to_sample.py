@@ -54,7 +54,7 @@ def net_to_sample(net_file, zhongzi_file, tag_set, dir_name):
             if i >= 100000000:
                 break
             line_list = line.strip().split("\t")
-            nid, title, url, public_time, mthid, new_cate_v2, new_sub_cate_v2, manual_tags = line_list[:8]
+            nid, title, url, public_time, mthid, new_cate_v2, new_sub_cate_v2, manual_tags = line_list[:8] ##mthid, nid, manual_tags
             
             if new_cate_v2 in cate_remove_set:
                 continue

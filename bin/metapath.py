@@ -1,3 +1,4 @@
+#coding=utf-8
 import sys
 import os
 import random
@@ -83,7 +84,7 @@ class MetaPathGenerator:
             conf0 = conf
             outline_all = ""
             for j in xrange(0, numwalks ): #wnum walks
-                outline = self.id_conf[conf0]
+                outline = self.id_conf[conf0] #从tag开始游走
                 for i in xrange(0, walklength):
                     authors = self.conf_authorlist[conf]
                     numa = len(authors)
@@ -104,8 +105,8 @@ class MetaPathGenerator:
         for author in self.author_conflist:
             author0 = author
             outline_all = ""
-            for j in xrange(0, numwalks ): #wnum walks
-                outline = self.id_author[author0]
+            for j in xrange(0, numwalks): #wnum walks
+                outline = self.id_author[author0] #从author开始游走
                 for i in xrange(0, walklength):
                     confs = self.author_conflist[author]
                     numc = len(confs)
