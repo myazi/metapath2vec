@@ -8,16 +8,16 @@ Metapath2vec是一种node2vec向量表示方法. 首次提出了在异构网络�
 </p>
 
 ## 数据
-./data/
-<p align="center">
- <img src="docs/img/data.png" alt="data" />
+源数据：./data/zhengpai_tuwen
+<p align="left">
+ <img src="docs/img/data.png" alt="data" width="50%" />
 </p>
 
-./data/net_train
+二部图数据：./data/net_train
 
-./data/in_train
+随机游走序列：./data/in_train
 
-./data/out_train
+结果向量：./data/out_train
 
 ## 使用
 ```
