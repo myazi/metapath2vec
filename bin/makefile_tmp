@@ -1,0 +1,10 @@
+CC = /usr/bin/gcc
+CPP = /usr/bin/g++
+
+#FLAGS = -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+FLAGS = -lm -pthread -O3 -march=native -funroll-loops -Wno-unused-result
+
+all: similar_200_2
+
+similar_200_2 : get_similar_author_change.c
+	$(CC) get_similar_author_change.c -o similar_200_2 $(FLAGS)
